@@ -1,8 +1,8 @@
 export async function GET() {
-  	return new Response(null, {
-    	status: 302,
-    	headers: {
-     		Location: "/es",
-    	},
-  	});
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: "/es", // o "/en"
+    },
+  });
 }
