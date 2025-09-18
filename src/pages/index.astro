@@ -1,0 +1,19 @@
+---
+// src/pages/index.astro
+---
+<html lang="en">
+  <head>
+    <meta http-equiv="refresh" content="0; url=/es" />
+    <script>
+      const lang = (navigator.languages && navigator.languages[0]) || navigator.language || "en";
+      if (lang.startsWith("es")) {
+        window.location.href = "/es";
+      } else {
+        window.location.href = "/en";
+      }
+    </script>
+  </head>
+  <body>
+    <p>Redirigiendo...</p>
+  </body>
+</html>
