@@ -1,0 +1,122 @@
+---
+type Lang = "es" | "en";
+
+const { pathname } = Astro.url;
+const currentLang = (pathname.startsWith("/en") ? "en" : "es") as Lang;
+
+const slides: Record<Lang, {
+    title: string;
+    description: string;
+    image: string;
+    buttonText: string
+}[]> = {
+    es: 
+    [
+        {
+            title: "Machu Picchu",
+            description: "Descubre la majestuosidad de Machu Picchu, una de las maravillas del mundo y un destino lleno de historia y cultura.",
+            image: "./slide-machupicchu.avif",
+            buttonText: "Consultar ahora"
+        },
+        {
+            title: "Ica & Paracas",
+            description: "Explora las maravillas de Ica y Paracas, destinos llenos de aventura, naturaleza y cultura fascinante.",
+            image: "./slide-paracas.avif",
+            buttonText: "Consultar ahora"
+        },
+        {
+            title: "Lago Titicaca",
+            description: "Descubre la serenidad y belleza del Lago Titicaca, el lago navegable más alto del mundo, lleno de tradiciones y paisajes únicos.",
+            image: "./slide-lago-titicaca.avif",
+            buttonText: "Consultar ahora"
+        }
+    ],
+    en: 
+    [
+        {
+            title: "Machu Picchu",
+            description: "Discover the majesty of Machu Picchu, one of the wonders of the world and a destination full of history and culture.",
+            image: "./slide-machupicchu.avif",
+            buttonText: "Book now"
+        },
+        {
+            title: "Ica & Paracas",
+            description: "Explore the wonders of Ica and Paracas, destinations full of adventure, nature, and fascinating culture.",
+            image: "./slide-paracas.avif",
+            buttonText: "Book now"
+        },
+        {
+            title: "Lake Titicaca",
+            description: "Discover the serenity and beauty of Lake Titicaca, the world's highest navigable lake, rich in traditions and unique landscapes.",
+            image: "./slide-lago-titicaca.avif",
+            buttonText: "Book now"
+        }
+    ]
+};
+---
+<div class="relative w-full h-screen overflow-hidden">
+	<div id="slider" class="flex w-full h-full transition-transform duration-700 ease-in-out">
+		{slides[currentLang].map((slide, idx) => {
+            const message = currentLang === "es" ? `Hola Cusco Travel Adventure, quiero más información sobre el paquete ${slide.title} ✈️`
+            : `Hello Cusco Travel Adventure, I'd like more information about the package ${slide.title} ✈️`;
+
+			const whatsappLink = `https://wa.me/51973291892?text=${encodeURIComponent(message)}`;
+			return (
+				<div class="flex-shrink-0 w-full h-full relative flex items-center justify-center text-white" style={`background-image: url(${slide.image}); background-size: cover; background-position: center;`}>
+					<div class="absolute inset-0 bg-[#19470c]/65 saturate-200 brightness-25"></div>
+					<div class="text-center px-6 py-8 md:px-12 md:py-16 rounded flex flex-col items-center justify-center relative z-10">
+						<h2 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4">{slide.title}</h2>
+						<p class="text-sm md:text-lg lg:text-xl mb-6">{slide.description}</p>
+						<a href={whatsappLink} target="_blank" class="bg-[#efe7da] text-[#19470c] font-bold py-2 px-4 md:py-3 md:px-6 rounded-full flex items-center justify-center gap-2 hover:bg-[#ffc834] transition max-w-xs">
+                            <i class="fab fa-whatsapp text-green-500"></i>
+                            {slide.buttonText}
+                        </a>
+					</div>
+				</div>
+			);
+		})}
+	</div>
+
+	<div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
+		{slides[currentLang].map((_, idx) => (
+			<div class="w-3 h-3 md:w-4 md:h-4 bg-white rounded-full opacity-50 hover:opacity-100 transition cursor-pointer" data-index={idx}></div>
+		))}
+	</div>
+
+	<button id="prev" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-black/70 transition z-20">
+		<i class="fas fa-chevron-left text-xl md:text-2xl"></i>
+	</button>
+	<button id="next" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-black/70 transition z-20">
+		<i class="fas fa-chevron-right text-xl md:text-2xl"></i>
+	</button>
+</div>
+
+<script type="module">
+	const slider = document.getElementById("slider");
+	const nextBtn = document.getElementById("next");
+	const prevBtn = document.getElementById("prev");
+	const indicators = document.querySelectorAll("[data-index]");
+
+	if (slider && nextBtn && prevBtn) {
+		const totalSlides = slider.children.length;
+		let index = 0;
+
+		const goToSlide = (i) => {
+			index = (i + totalSlides) % totalSlides;
+			slider.style.transform = `translateX(-${index * 100}%)`;
+			indicators.forEach((indicator, idx) => {
+				indicator.style.opacity = idx === index ? "1" : "0.5";
+			});
+		};
+
+		nextBtn.addEventListener("click", () => goToSlide(index + 1));
+		prevBtn.addEventListener("click", () => goToSlide(index - 1));
+		indicators.forEach((indicator) => {
+			indicator.addEventListener("click", () => goToSlide(Number(indicator.dataset.index)));
+		});
+
+		setInterval(() => goToSlide(index + 1), 5000);
+
+		goToSlide(0);
+	}
+</script>

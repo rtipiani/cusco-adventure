@@ -1,0 +1,172 @@
+---
+interface Props {
+  	lang: "es" | "en";
+}
+const { lang } = Astro.props;
+
+const terminos = {
+  	es: 
+	{
+    	secciones: [
+      		{
+        		titulo: "1. Cancelaciones",
+        		contenido: `
+        			• Si una solicitud de cancelación se recibe 30 días antes de su viaje o dentro de 4 días tras la confirmación, se aplicará una penalidad de US$ 45.00 por persona.
+        			• Los ingresos a Machupicchu, Waynapicchu, Montaña Machupicchu, Huchuypicchu y Puente Inka no son reembolsables según el Ministerio de Cultura.
+        			• Los boletos de tren tienen una penalidad del 15% sobre el valor original, salvo tarifas promocionales (INCA RAIL y PERU RAIL).
+        			• Las reservas de hoteles se rigen por las políticas del propio establecimiento.
+        			• Cancelaciones a menos de 30 días tienen una penalidad de US$ 50.00.
+        			• Cancelaciones con menos de 72 horas: penalidad del 100%.
+        			• En casos de fuerza mayor (paros, emergencias, desastres), la penalidad será del 50%.`,
+      		},
+      		{
+        		titulo: "2. Devoluciones",
+        		contenido: `
+        			• Trenes: trámite presencial, devolución aprox. 30 días o más.
+        			• Entradas: en general solo se permiten cambios, en casos especiales demora aprox. 15 días.
+        			• Hoteles y vuelos: sujetos a las políticas de cada proveedor.
+        			• Los reembolsos se realizan por el mismo medio de pago utilizado.
+        			• Tarjetas de crédito y transferencias: 15 días para procesar.`,
+      		},
+      		{
+        		titulo: "3. Responsabilidad",
+        		contenido: `
+        			Cusco Adventure Travel Perú actúa como intermediario entre los clientes y los proveedores de servicios turísticos.
+        			No nos responsabilizamos por retrasos, accidentes, pérdidas o gastos adicionales ocasionados por causas de fuerza mayor.`,
+      		},
+      		{
+        		titulo: "4. Documentación",
+        		contenido: `
+        			El cliente es responsable de portar pasaporte, documentos de viaje, visas, permisos de ingreso y vacunas necesarias.
+        			No nos hacemos responsables por la falta de documentos.`,
+      		},
+      		{
+        		titulo: "5. Modificaciones de Itinerario",
+        		contenido: `
+        			Cusco Travel Adventure Perú se reserva el derecho de modificar itinerarios por motivos de seguridad, clima u otras circunstancias ajenas a nuestro control.`,
+      		},
+      		{
+        		titulo: "6. Recomendaciones de Salud",
+        		contenido: `
+        			El cliente debe estar en condiciones físicas adecuadas para realizar las actividades.
+        			Se recomienda consultar con su médico antes de realizar actividades de altura o esfuerzo físico.`,
+      		},
+      		{
+        		titulo: "7. Pérdida de Objetos",
+        		contenido: `
+        			No nos hacemos responsables por objetos perdidos o extraviados durante los tours o traslados.`,
+      		},
+      		{
+        		titulo: "8. Jurisdicción y Ley Aplicable",
+        		contenido: `
+        			Los presentes términos se rigen por las leyes peruanas.
+        			Cualquier conflicto será sometido a la jurisdicción de las autoridades peruanas competentes.`,
+      		},
+      		{
+        		titulo: "9. Contacto",
+        		contenido: `
+        			Para consultas o reclamos, comuníquese con nosotros al correo:
+        			info@cuscoadventuretravelperu.com
+        			También puede acudir a la Autoridad Nacional de Protección de Datos Personales:
+        			www.minjus.gob.pe/proteccion-de-datos-personales`,
+      		},
+    	],
+    	compromiso:
+      		"Al contratar nuestros servicios, usted declara haber leído, entendido y aceptado los presentes términos y condiciones.",
+    	firma: "Cusco Adventure Travel Perú",
+  	},
+  	en: 
+	{
+    	secciones: [
+      		{
+        		titulo: "1. Cancellations",
+        		contenido: `
+        			• If a cancellation request is received 30 days before your trip or within 4 days after confirmation, a penalty of US$ 45.00 per person will apply.
+        			• Entrance tickets to Machupicchu, Waynapicchu, Montaña Machupicchu, Huchuypicchu, and Inka Bridge are non-refundable according to the Ministry of Culture.
+        			• Train tickets have a 15% penalty on the original value, except promotional fares (INCA RAIL and PERU RAIL).
+        			• Hotel reservations are subject to the policies of each establishment.
+        			• Cancellations less than 30 days prior: penalty of US$ 50.00.  
+        			• Cancellations within 72 hours: 100% penalty.
+        			• In cases of force majeure (strikes, emergencies, disasters), a 50% penalty will apply.`,
+      		},
+      		{
+        		titulo: "2. Refunds",
+        		contenido: `
+        			• Trains: in-person procedure, refund approx. 30 days or more.
+        			• Tickets: generally only changes are allowed; in special cases, processing takes about 15 days.
+        			• Hotels and flights: subject to each provider's policies.  
+        			• Refunds are made through the same payment method used.
+        			• Credit cards and transfers: up to 15 days to process.`,
+      		},
+      		{
+        		titulo: "3. Responsibility",
+        		contenido: `
+        			Cusco Adventure Travel Perú acts as an intermediary between clients and tourism service providers.
+        			We are not responsible for delays, accidents, losses, or additional expenses caused by force majeure.`,
+      		},
+      		{
+        		titulo: "4. Documentation",
+        		contenido: `
+        			The client is responsible for carrying a passport, travel documents, visas, entry permits, and necessary vaccinations.
+        			We are not responsible for missing documents.`,
+      		},
+      		{
+        		titulo: "5. Itinerary Modifications",
+        		contenido: `
+        			Cusco Travel Adventure Perú reserves the right to modify itineraries due to safety, weather, or other circumstances beyond our control.`,
+      		},
+      		{
+        		titulo: "6. Health Recommendations",
+        		contenido: `
+        			The client must be in adequate physical condition to participate in activities.
+        			It is recommended to consult with a doctor before undertaking high-altitude or physically demanding activities.`,
+      		},
+      		{
+        		titulo: "7. Lost Items",
+        		contenido: `
+        			We are not responsible for lost or misplaced items during tours or transfers.`,
+      		},
+      		{
+        		titulo: "8. Jurisdiction and Applicable Law",
+        		contenido: `
+        			These terms are governed by Peruvian law.
+        			Any conflict will be submitted to the jurisdiction of the competent Peruvian authorities.`,
+      		},
+      		{
+        		titulo: "9. Contact",
+        		contenido: `
+        			For inquiries or complaints, please contact us at:
+        			info@cuscoadventuretravelperu.com
+       				You may also contact the National Authority for Personal Data Protection:
+        			www.minjus.gob.pe/proteccion-de-datos-personales`,
+      		},
+    	],
+    	compromiso:
+      		"By contracting our services, you declare that you have read, understood, and accepted these terms and conditions.",
+    	firma: "Cusco Adventure Travel Perú",
+  	},
+};
+---
+<section class="py-16 bg-white">
+  	<div class="max-w-5xl mx-auto px-4 lg:px-12">
+    	{terminos[lang].secciones.map((sec) => (
+      		<div class="mb-5">
+        		<h2 class="text-lg md:text-xl font-semibold text-[#19470c] mb-1">
+          			{sec.titulo}
+        		</h2>
+        		<p class="text-gray-700 text-sm md:text-base whitespace-pre-line leading-snug mb-2">
+          			{sec.contenido}
+        		</p>
+      		</div>
+    	))}
+  	</div>
+
+  	<div class="max-w-3xl mx-auto mt-8 p-6 bg-gray-50 border border-gray-300 rounded-xl shadow-md text-center">
+    	<p class="text-gray-800 text-sm md:text-base leading-snug">
+      		{terminos[lang].compromiso}
+    	</p>
+    	<p class="mt-2 font-semibold text-[#19470c] text-sm md:text-base">
+      		{terminos[lang].firma}
+    	</p>
+  	</div>
+</section>

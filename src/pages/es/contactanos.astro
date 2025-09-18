@@ -1,0 +1,83 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+const lang = "es";
+
+const content = {
+    title: "Contáctanos",
+    subtitle: "Estamos aquí para ayudarte a planificar tu próxima aventura.",
+    form: {
+        name: "Nombre completo",
+        email: "Correo electrónico",
+        phone: "Teléfono",
+        message: "Mensaje",
+        send: "Enviar mensaje"
+    }
+};
+---
+<Layout>
+    <section class="relative">
+        <div class="relative h-[70vh] md:h-[80vh] rounded-b-3xl overflow-hidden shadow-lg" style={`background-image: url('/bg-cusco.avif'); background-size: cover; background-position: center;`}>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70"></div>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+                <h1 class="font-extrabold text-white drop-shadow-lg text-[clamp(1.8rem,4vw,3.2rem)]">{content.title}</h1>
+                <p class="mt-3 text-white/80 max-w-2xl text-[clamp(0.9rem,2vw,1.2rem)]">{content.subtitle}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <div class="bg-gradient-to-br from-[#19470c] to-[#0f2e08] text-[#efe7da] rounded-2xl shadow-xl p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
+            <div>
+                <h2 class="text-xl sm:text-2xl font-bold mb-6">Oficina Principal</h2>
+                <ul class="space-y-4 text-sm sm:text-base">
+                    <li class="flex items-start">
+                        <span class="mr-3 text-[#ffc834]"><i class="fas fa-map-marker-alt"></i></span>
+                        <span>Alameda Pachacuteq A-5, Las Malvinas, Cusco, Perú</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-3 text-[#ffc834]"><i class="fas fa-phone"></i></span>
+                        <span>(+51) 973 291 892 <br /> (+51) 914 397 155</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-3 text-[#ffc834] flex-shrink-0"><i class="fas fa-envelope"></i></span>
+                        <span class="break-all whitespace-normal leading-relaxed">
+                            info@cuscoadventuretravelperu.com <br />
+                            reservascatravelperu@gmail.com
+                        </span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-3 text-[#ffc834]"><i class="fas fa-clock"></i></span>
+                        <span>Lunes a sábado, 8:00 a.m. - 10:00 p.m. <br /> Atención postventa: 24/7</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="mt-8 rounded-xl overflow-hidden shadow-lg border border-white/10">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3879.11481837537!2d-71.97359462533197!3d-13.528544571256795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x916dd5e6b7a34727%3A0x58215accfaedd01a!2sa%2C%20Pje.%20Las%20Malvinas%205%2C%20Santiago%20de%20Cusco%2008007!5e0!3m2!1ses!2spe!4v1758090802124!5m2!1ses!2spe" class="w-full h-56 sm:h-64 lg:h-72" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 lg:p-10 border border-gray-100">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-6">Envíanos un mensaje</h2>
+            <form action="/sendmail.php" method="post" class="space-y-6">
+                <div>
+                    <label for="name" class="block text-sm font-semibold text-gray-700">{content.form.name}</label>
+                    <input type="text" id="name" name="name" required class="mt-2 block w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm sm:text-base" />
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-semibold text-gray-700">{content.form.email}</label>
+                    <input type="email" id="email" name="email" required class="mt-2 block w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm sm:text-base" />
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-semibold text-gray-700">{content.form.phone}</label>
+                    <input type="tel" id="phone" name="phone" class="mt-2 block w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm sm:text-base" />
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-semibold text-gray-700">{content.form.message}</label>
+                    <textarea id="message" name="message" rows="5" required class="mt-2 block w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm sm:text-base"></textarea>
+                </div>
+                <button type="submit" class="w-full py-3 px-6 bg-[#64a323] text-white font-semibold rounded-xl shadow-md hover:bg-[#4a7d1a] transition cursor-pointer">{content.form.send}</button>
+            </form>
+        </div>
+    </section>
+</Layout>

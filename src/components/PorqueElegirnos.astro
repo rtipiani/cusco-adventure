@@ -1,0 +1,129 @@
+---
+type Lang = "es" | "en";
+const { lang = "es" }: { lang?: Lang } = Astro.props;
+
+interface Item {
+  	icon: string;
+  	title: string;
+  	description: string;
+}
+
+const data: Record<Lang, { heading: string; subheading: string; items: Item[] }> = {
+  	es: 
+	{
+    	heading: "¿POR QUÉ ELEGIRNOS?",
+    	subheading:
+      		"Cada detalle de nuestros servicios está pensado para que disfrutes de un viaje único, seguro y memorable.",
+    	items: [
+      		{
+        		icon: "fas fa-tags",
+        		title: "NUESTROS PRECIOS",
+        		description:
+          			"La mejor relación calidad-precio: hoteles de primer nivel, guías profesionales y movilidad exclusiva para tu comodidad."
+      		},
+      		{
+        		icon: "fas fa-globe",
+        		title: "EXPERTOS EN VIAJES",
+        		description:
+          			"Nuestro equipo local conoce cada rincón, cultura y experiencia única del Perú. Siempre tendrás asistencia personalizada."
+      		},
+      		{
+        		icon: "fas fa-shield-alt",
+        		title: "VIAJERO SEGURO",
+        		description:
+          			"Reconocidos por nuestra solidez y confiabilidad, trabajamos con una red de hoteles y operadores certificados."
+      		},
+      		{
+        		icon: "fas fa-route",
+        		title: "PERSONALIZACIÓN DE VIAJES",
+        		description:
+          			"Paquetes flexibles y adaptables a tus intereses: desde viajes grupales hasta experiencias exclusivas."
+      		},
+      		{
+        		icon: "fas fa-thumbs-up",
+        		title: "MULTIRECOMENDADO",
+        		description:
+          			"Nuestros viajeros nos recomiendan en Tripadvisor, Google y redes sociales. Tu satisfacción es nuestra mejor carta."
+      		},
+      		{
+        		icon: "fas fa-users",
+        		title: "EQUIPO DE TRABAJO",
+        		description:
+          			"Un equipo motivado y comprometido que cuida cada detalle para que tu experiencia sea inolvidable."
+      		}
+    	]
+  	},
+  	en: 
+	{
+    	heading: "WHY CHOOSE US?",
+    	subheading:
+      		"Every detail of our services is designed so you can enjoy a unique, safe, and memorable trip.",
+    	items: [
+      		{
+        		icon: "fas fa-tags",
+        		title: "OUR PRICES",
+        		description:
+          			"The best value for money: top-class hotels, professional guides, and exclusive transport for your comfort."
+      		},
+     		{
+        		icon: "fas fa-globe",
+        		title: "TRAVEL EXPERTS",
+        		description:
+          			"Our local team knows every corner, culture, and unique experience of Peru. You will always have personalized assistance."
+      		},
+      		{
+        		icon: "fas fa-shield-alt",
+        		title: "SAFE TRAVELER",
+        		description:
+          			"Recognized for our reliability and trust, we work with a network of certified hotels and operators."
+      		},
+      		{
+        		icon: "fas fa-route",
+        		title: "TRAVEL PERSONALIZATION",
+        		description:
+          			"Flexible packages tailored to your interests: from group trips to exclusive experiences."
+      		},
+      		{
+        		icon: "fas fa-thumbs-up",
+        		title: "HIGHLY RECOMMENDED",
+        		description:
+          			"Our travelers recommend us on Tripadvisor, Google, and social media. Your satisfaction is our best credential."
+      		},
+      		{
+        		icon: "fas fa-users",
+        		title: "DEDICATED TEAM",
+        		description:
+          			"A motivated and committed team that takes care of every detail to make your experience unforgettable."
+      		}
+    	]
+  	}
+};
+
+const content = data[lang];
+---
+<section class="py-20 bg-gradient-to-b from-gray-50 to-white">
+  	<div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+    	<h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-4">
+      		{content.heading}
+    	</h2>
+    	<p class="max-w-3xl mx-auto text-gray-600 text-base sm:text-lg mb-12">
+      		{content.subheading}
+    	</p>
+
+    	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      		{content.items.map((item) => (
+        		<div class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center text-center">
+          			<div class="flex items-center justify-center w-16 h-16 rounded-full bg-amber-500 text-white mb-6 group-hover:scale-110 transition-transform duration-300">
+            			<i class={item.icon + " text-2xl"}></i>
+          			</div>
+          			<h3 class="text-lg font-semibold text-gray-900 mb-3 group-hover:text-amber-600 transition-colors">
+            			{item.title}
+          			</h3>
+          			<p class="text-gray-600 text-sm leading-relaxed">
+            			{item.description}
+          			</p>
+        		</div>
+      		))}
+    	</div>
+  	</div>
+</section>

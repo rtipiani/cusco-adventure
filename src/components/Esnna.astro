@@ -1,0 +1,124 @@
+---
+type Lang = "es" | "en";
+const { lang = "es" }: { lang?: Lang } = Astro.props;
+
+const codigoEssna: Record<Lang, {
+  	titulo: string;
+  	subtitulo: string;
+  	descripcion: string;
+  	quehacerTitulo: string;
+  	quehacer: string[];
+  	contactosTitulo: string;
+  	contactos: string[];
+  	compromiso: string;
+  	firma: string;
+  	imagen: string;
+}> = {
+  	es: {
+    	titulo: "Compromiso Contra la Explotación de Menores",
+    	subtitulo: "Código de Conducta - Cusco Adventure Travel Perú",
+    	descripcion: `
+			Conforme al cumplimiento del Decreto Supremo Nº 005-2020-MINCETUR que aprueba el Reglamento de Agencias de Viajes y Turismo, CUSCO ADVENTURE TRAVEL PERÚ ha suscrito el Código de Conducta Contra la Explotación de Niños, Niñas y Adolescentes (ESNNA). Ratificamos nuestro código de ética organizacional y rechazamos, denunciamos y condenamos cualquier práctica relacionada con la explotación de menores en el Perú y el mundo.
+    	`,
+    	quehacerTitulo: "¿Qué podemos hacer para evitar este problema?",
+    	quehacer: [
+      		"Mantener una actitud de rechazo a la ESNNA y advertir sobre la pena de cárcel.",
+      		"Denunciar inmediatamente todo caso de ESNNA ante el Ministerio Público o la Policía Nacional.",
+      		"Tener a la mano los números de contacto de instituciones responsables."
+    	],
+    	contactosTitulo: "Contactos para Denuncias",
+    	contactos: [
+      		"Ministerio del Interior: Línea 0800-2-3232",
+      		"Ministerio de la Mujer y Poblaciones Vulnerables (CEM): Línea 100",
+      		"Policía Nacional: Ubica la Comisaría más cercana",
+      		"Fiscalía y Defensorías del Niño y del Adolescente"
+    	],
+    	compromiso: `
+			En CUSCO ADVENTURE TRAVEL PERÚ no promovemos ni permitimos la explotación sexual de niños, niñas y adolescentes; ni cualquier otro ilícito penal del cual tomemos conocimiento en el desarrollo de nuestra actividad, conforme a la Ley N° 29408.
+			Si conoces algún caso de explotación sexual en menores de 18 años, no dudes en denunciarlo.
+    	`,
+    	firma: "Atentamente, CUSCO ADVENTURE TRAVEL PERÚ",
+    	imagen: "/esnna.avif"
+  	},
+  	en: {
+    	titulo: "Commitment Against Child Exploitation",
+    	subtitulo: "Code of Conduct - Cusco Adventure Travel Peru",
+    	descripcion: `
+			In compliance with Supreme Decree No. 005-2020-MINCETUR approving the Regulation of Travel and Tourism Agencies, CUSCO ADVENTURE TRAVEL PERÚ has signed the Code of Conduct Against the Exploitation of Children and Adolescents (ESNNA). We reaffirm our organizational code of ethics and reject, report, and condemn any practice related to the exploitation of minors in Peru and worldwide.
+    	`,
+    	quehacerTitulo: "What can we do to prevent this issue?",
+    	quehacer: [
+      		"Maintain a stance of rejection towards ESNNA and warn about prison penalties.",
+      		"Immediately report any ESNNA case to the Public Prosecutor's Office or the National Police.",
+      		"Keep contact numbers of responsible institutions at hand."
+    	],
+    	contactosTitulo: "Contacts for Reporting",
+    	contactos: [
+      		"Ministry of the Interior: Hotline 0800-2-3232",
+      		"Ministry of Women and Vulnerable Populations (CEM): Hotline 100",
+      		"National Police: Find the nearest police station",
+      		"Prosecutor's Office and Child & Adolescent Defender’s Offices"
+    	],
+    	compromiso: `
+			At CUSCO ADVENTURE TRAVEL PERÚ we do not promote or allow the sexual exploitation of children or adolescents, nor any other criminal offense we become aware of in the course of our activity, in accordance with Law No. 29408.
+			If you know of any case of sexual exploitation of minors under 18, please report it.
+    	`,
+    	firma: "Sincerely, CUSCO ADVENTURE TRAVEL PERÚ",
+    	imagen: "/esnna.avif"
+  	}
+};
+
+const data = codigoEssna[lang];
+---
+<section class="py-16 bg-white">
+  	<div class="max-w-3xl mx-auto text-center mb-10 px-4">
+    	<h1 class="font-bold text-[#19470c] mb-2 leading-snug text-[clamp(1.2rem,2.2vw,1.5rem)]">
+      		{data.titulo}
+    	</h1>
+    	<h2 class="font-medium text-gray-700 italic text-[clamp(0.9rem,1.8vw,1.05rem)]">
+      		{data.subtitulo}
+    	</h2>
+  	</div>
+
+  	<div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+    	<div class="space-y-5">
+      		<p class="text-gray-700 leading-relaxed text-[clamp(0.85rem,1.6vw,0.95rem)]">
+        		{data.descripcion}
+      		</p>
+
+      		<div>
+        		<h3 class="font-semibold text-[#19470c] mt-5 mb-2 text-[clamp(1rem,2vw,1.2rem)]">
+          			{data.quehacerTitulo}
+        		</h3>
+        		<ul class="list-disc pl-5 space-y-1.5 text-gray-700 text-[clamp(0.85rem,1.6vw,0.95rem)]">
+          			{data.quehacer.map((item) => <li>{item}</li>)}
+        		</ul>
+      		</div>
+
+      		<div>
+        		<h3 class="font-semibold text-[#19470c] mt-5 mb-2 text-[clamp(1rem,2vw,1.2rem)]">
+          			{data.contactosTitulo}:
+        		</h3>
+        		<ul class="list-disc pl-5 space-y-1.5 text-gray-700 text-[clamp(0.85rem,1.6vw,0.95rem)]">
+          			{data.contactos.map((c) => <li>{c}</li>)}
+        		</ul>
+      		</div>
+    	</div>
+
+    	<div class="flex justify-center lg:justify-end">
+      		<div class="relative rounded-xl shadow-lg overflow-hidden w-full max-w-md">
+        		<img src={data.imagen} alt="Código ESNNA" class="object-contain w-full h-auto max-h-[380px] sm:max-h-[480px] lg:max-h-[550px] transition-transform duration-500 hover:scale-105" />
+        		<div class="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent pointer-events-none"></div>
+      		</div>
+    	</div>
+  	</div>
+
+  	<div class="max-w-3xl mx-auto mt-10 p-6 bg-gray-50 border border-gray-300 rounded-xl shadow-md text-center px-4">
+    	<p class="text-gray-800 leading-relaxed text-[clamp(0.85rem,1.6vw,0.95rem)]">
+      		{data.compromiso}
+    	</p>
+    	<p class="mt-2 font-semibold text-[#19470c] text-[clamp(0.85rem,1.6vw,0.95rem)]">
+      		{data.firma}
+    	</p>
+  	</div>
+</section>

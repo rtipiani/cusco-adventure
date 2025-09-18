@@ -1,0 +1,140 @@
+---
+import { itinerario, type Lang } from "../data/itinerario";
+
+export interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const itinerarioData = itinerario[lang];
+---
+<section id="itinerario" class="py-16 bg-gradient-to-b from-gray-50 to-white scroll-mt-12">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-green-900 mb-10 text-center">
+            {lang === 'es' ? 'Itinerario Completo' : 'Full Itinerary'}
+        </h2>
+
+        <div class="space-y-6">
+            {itinerarioData.map((item, index) => (
+                <details class="group bg-white shadow rounded-2xl overflow-hidden border border-gray-200 transition-all hover:shadow-xl" open={index === 0 ? true : undefined} data-accordion>
+                    <summary class="cursor-pointer flex justify-between items-center px-4 sm:px-6 py-4 sm:py-5 text-base sm:text-lg font-semibold text-gray-800 select-none hover:bg-gray-50 transition">
+                        <div class="flex items-center gap-2">
+                            <span class="bg-gray-100 text-black font-bold text-xs sm:text-sm px-2 sm:px-3 py-1 rounded-full">
+                                {lang === 'es' ? `Día ${index + 1}` : `Day ${index + 1}`}
+                            </span>
+                            <span class="text-gray-800">{item.dia}</span>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </summary>
+
+                    <div class="accordion-panel px-4 sm:px-6 pb-6 pt-4 border-t border-gray-100 bg-white/95 text-sm sm:text-base">
+                        {item.imagen && (
+                            <img src={item.imagen} alt={item.titulo || item.dia} loading="lazy" class="w-full h-48 sm:h-56 md:h-72 object-cover rounded-xl mb-6 shadow-sm"/>
+                        )}
+                        {item.titulo && (
+                            <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-4">{item.titulo}</h3>
+                        )}
+                        {item.descripcion && (
+                            <div class="space-y-4 text-gray-600 leading-relaxed text-justify">
+                                {item.descripcion.map((parrafo) => (
+                                    <p>{parrafo}</p>
+                                ))}
+                            </div>
+                        )}
+
+                        {item.atractivos && (
+                            <ul class="list-disc list-inside ml-4 mt-4 space-y-1 text-gray-700">
+                                {item.atractivos.map((a) => (
+                                    <li>
+                                        <strong>{a.nombre}:</strong> {a.descripcion}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+
+                        {item.descripcionFinal && (
+                            <div class="mt-4 text-gray-600 leading-relaxed text-justify">
+                                <p>{item.descripcionFinal}</p>
+                            </div>
+                        )}
+
+                        {item.circuitos && (
+                            <div class="mt-6 space-y-4">
+                                <h4 class="font-semibold text-green-700">
+                                    {lang === 'es' ? 'Circuitos Disponibles:' : 'Available Circuits:'}
+                                </h4>
+                                {item.circuitos.map((c) => (
+                                    <div class="p-4 border rounded-lg bg-gray-50 shadow-sm">
+                                        <h5 class="font-semibold text-gray-800">{c.nombre}</h5>
+                                        <p class="text-gray-600 text-sm mt-1">{c.descripcion}</p>
+                                        <ul class="list-disc list-inside ml-4 mt-2 text-gray-700 text-sm space-y-1">
+                                            {c.rutas.map((ruta) => (
+                                                <li>{ruta}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        <div class="mt-6 sm:mt-8 grid gap-6 sm:gap-8 md:grid-cols-2">
+                            {item.incluye && (
+                                <div class="bg-gray-50 p-4 sm:p-6 rounded-xl border border-gray-200 shadow-md">
+                                    <h4 class="font-semibold text-green-800 flex items-center gap-2 text-base sm:text-lg">
+                                        <i class="fa-solid fa-circle-check text-green-600"></i>
+                                        {lang === 'es' ? 'Incluye' : 'Includes'}
+                                    </h4>
+                                    <ul class="mt-3 sm:mt-4 space-y-2 text-gray-700">
+                                        {item.incluye.map((i) => (
+                                            <li class="flex items-start gap-2 text-sm sm:text-base">
+                                                <i class="fa-solid fa-check text-green-600 mt-1"></i>
+                                                <span>{i}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {item.noIncluye && (
+                                <div class="bg-gray-50 p-4 sm:p-6 rounded-xl border border-red-200 shadow-md">
+                                    <h4 class="font-semibold text-red-800 flex items-center gap-2 text-base sm:text-lg">
+                                        <i class="fa-solid fa-circle-xmark text-red-600"></i>
+                                        {lang === 'es' ? 'No Incluye' : 'Does Not Include'}
+                                    </h4>
+                                    <ul class="mt-3 sm:mt-4 space-y-2 text-gray-700">
+                                        {item.noIncluye.map((n) => (
+                                            <li class="flex items-start gap-2 text-sm sm:text-base">
+                                                <i class="fa-solid fa-xmark text-red-600 mt-1"></i>
+                                                <span>{n}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+
+                        {item.recomendaciones && (
+                            <div class="mt-6 sm:mt-8 bg-gray-50 p-4 sm:p-6 rounded-xl border border-yellow-200 shadow-md">
+                                <h4 class="font-semibold text-yellow-800 flex items-center gap-2 text-base sm:text-lg">
+                                <i class="fa-solid fa-lightbulb text-yellow-500"></i>
+                                {lang === 'es' ? 'Recomendaciones' : 'Recommendations'}
+                                </h4>
+                                <ul class="mt-3 sm:mt-4 space-y-2 text-gray-700">
+                                {item.recomendaciones.map((rec) => (
+                                    <li class="flex items-start gap-2 text-sm sm:text-base">
+                                    <i class="fa-regular fa-circle-check text-yellow-500 mt-1"></i>
+                                    <span>{rec}</span>
+                                    </li>
+                                ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+                </details>
+            ))}
+        </div>
+    </div>
+</section>

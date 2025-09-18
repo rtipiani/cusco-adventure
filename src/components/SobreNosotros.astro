@@ -1,0 +1,133 @@
+---
+type Lang = "es" | "en";
+const { lang = "es" }: { lang?: Lang } = Astro.props;
+
+const data: Record<Lang, {
+  	sobreNosotros: {
+    	titulo: string;
+    	descripcion: string;
+    	items: { icono: string; titulo: string; descripcion: string }[];
+    	imagen: string;
+  	};
+  	comoReservar: {
+    	descripcion: string;
+    	imagen: string;
+  	};
+}> = {
+		es: 
+		{
+			sobreNosotros: {
+				titulo: "Sobre Nosotros",
+				descripcion:
+					"Somos una agencia de viajes ubicada en la ciudad de Cuzco, puerta de entrada a Machu Picchu. Organizamos tours de lujo, personalizados y privados con los más altos estándares de calidad. Nuestro compromiso es brindar una atención cálida, rápida y precisa para garantizar que tu viaje sea una experiencia inolvidable.",
+				items: [
+					{
+						icono: "fa-solid fa-map-marker-alt",
+						titulo: "Ubicación Estratégica",
+						descripcion: "En el corazón de Cuzco, conectados con los principales destinos turísticos."
+					},
+					{
+						icono: "fa-solid fa-user-friends",
+						titulo: "Atención Personalizada",
+						descripcion: "Diseñamos experiencias de viaje a medida, adaptadas a tus intereses."
+					},
+					{
+						icono: "fa-solid fa-star",
+						titulo: "Calidad Garantizada",
+						descripcion: "Servicios premium con estándares internacionales y detalles únicos."
+					}
+				],
+				imagen: "/slide-lago-titicaca.avif"
+			},
+			comoReservar: {
+				descripcion: `
+					Puede reservar un viaje con Cusco Adventure Travel Peru S.R.L. comunicándose con nosotros al número de WhatsApp o por llamada telefónica al (+51) 973291892 o por los correos electrónicos info@cuscoadventuretravelperu.com / reservascatravelperu@gmail.com. 
+					Cuando se comunique con nosotros, nos tomaremos el tiempo para personalizar su paquete turístico: destinos, presupuesto, preferencias hoteleras y gastronómicas, etc. Inmediatamente empezaremos a trabajar en el diseño de un itinerario especialmente diseñado para usted.
+					Estaremos encantados de refinar y editar su itinerario hasta que esté completamente satisfecho. Una vez que recibamos su aprobación de su itinerario, le pediremos que haga un prepago por su viaje. Aceptar un itinerario nuestro constituye un acuerdo con los términos y condiciones.
+					Para pasar las mejores vacaciones de su vida no olvide que:
+					- Debe contar con su respectivo Pasaporte, Célula de Identidad o DNI con al menos 6 meses de vigencia, para mayor información consulte inmigraciones de su país de origen.
+					- Si el viaje se realiza con menores de edad, debe portar de forma obligatoria la autorización de ambos padres para salir o ingresar al país, esta autorización tiene una vigencia de 90 días y debe entregarse a la autoridad migratoria peruana.
+				`,
+				imagen: "/vestimenta-de-los-incas.webp"
+			}
+		},
+		en: 
+		{
+		sobreNosotros: {
+			titulo: "About Us",
+			descripcion:
+				"We are a travel agency located in the city of Cusco, the gateway to Machu Picchu. We organize luxury, personalized, and private tours with the highest quality standards. Our commitment is to provide warm, fast, and accurate service to ensure your trip is unforgettable.",
+			items: [
+				{
+					icono: "fa-solid fa-map-marker-alt",
+					titulo: "Strategic Location",
+					descripcion: "In the heart of Cusco, connected to the main tourist destinations."
+				},
+				{
+					icono: "fa-solid fa-user-friends",
+					titulo: "Personalized Service",
+					descripcion: "We design tailor-made travel experiences adapted to your interests."
+				},
+				{
+					icono: "fa-solid fa-star",
+					titulo: "Guaranteed Quality",
+					descripcion: "Premium services with international standards and unique details."
+				}
+			],
+			imagen: "/slide-lago-titicaca.avif"
+		},
+		comoReservar: {
+			descripcion: `
+				You can book a trip with Cusco Adventure Travel Peru S.R.L. by contacting us via WhatsApp or by phone call at (+51) 973291892 or by email at info@cuscoadventuretravelperu.com / reservascatravelperu@gmail.com.
+				When you contact us, we will take the time to personalize your travel package: destinations, budget, hotel and dining preferences, etc. We will immediately start working on an itinerary specially designed for you.
+				We will be happy to refine and edit your itinerary until you are completely satisfied. Once we receive your approval, we will ask you for a prepayment for your trip. Accepting one of our itineraries constitutes an agreement with the terms and conditions.
+				To enjoy the best vacation of your life, please remember:
+				- You must have your Passport, Identity Card, or DNI valid for at least 6 months. For more information, check immigration regulations in your country of origin.
+				- If the trip involves minors, you must carry authorization from both parents to leave or enter the country. This authorization is valid for 90 days and must be presented to the Peruvian immigration authority.
+			`,
+			imagen: "/vestimenta-de-los-incas.webp"
+		}
+  	}
+};
+
+const { sobreNosotros, comoReservar } = data[lang];
+---
+<section class="relative w-full min-h-[80vh] pt-16 md:pt-20">
+  	<img src={sobreNosotros.imagen} alt={sobreNosotros.titulo} class="absolute inset-0 w-full h-full object-cover" />
+  	<div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/80"></div>
+
+  	<div class="relative z-10 max-w-6xl mx-auto px-6 lg:px-12 py-12 md:py-16 text-center">
+    	<h2 class="font-bold text-white drop-shadow-md mb-4 text-[clamp(1.3rem,2.2vw,1.8rem)]">
+      		{sobreNosotros.titulo}
+    	</h2>
+    	<p class="max-w-2xl mx-auto text-white/90 leading-relaxed mb-10 text-[clamp(0.9rem,1.6vw,1rem)]">
+      		{sobreNosotros.descripcion}
+    	</p>
+
+    	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+      		{sobreNosotros.items.map((item) => (
+        		<div class="bg-white/10 border border-white/20 backdrop-blur-md p-6 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition duration-300">
+          			<div class="flex justify-center mb-4">
+            			<i class={`${item.icono} text-[clamp(1.5rem,3vw,2rem)] text-amber-400 drop-shadow`} />
+          			</div>
+          			<h3 class="font-semibold text-white mb-2 text-[clamp(1rem,1.8vw,1.1rem)]">{item.titulo}</h3>
+          			<p class="text-gray-200 leading-relaxed text-[clamp(0.85rem,1.5vw,0.95rem)]">{item.descripcion}</p>
+        		</div>
+      		))}
+    	</div>
+  	</div>
+</section>
+
+<section class="py-16 bg-white">
+  	<div class="max-w-6xl mx-auto px-6 lg:px-12 grid grid-cols-1 gap-12 items-center md:grid-cols-1 lg:grid-cols-2">
+    	<div class="order-1 lg:order-1">
+      		<img src={comoReservar.imagen} alt="Cómo Reservar" class="w-full max-h-[380px] md:max-h-[340px] lg:max-h-full rounded-2xl shadow-xl object-cover transition-transform duration-300 hover:scale-105"/>
+    	</div>
+
+    	<div class="space-y-6 order-2 lg:order-2">
+      		<p class="text-gray-700 leading-relaxed whitespace-pre-line text-[clamp(0.9rem,1.6vw,1rem)] text-justify">
+        		{comoReservar.descripcion}
+      		</p>
+    	</div>
+  	</div>
+</section>

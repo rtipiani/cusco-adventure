@@ -1,22 +1,63 @@
+---
+import Navbar from "@components/Navbar.astro";
+import Footer from "@components/Footer.astro";
+import "../../styles/global.css";
+
+const lang = Astro.url.pathname.startsWith("/en") ? "en" : "es";
+
+const meta = {
+  	es: {
+    	title: "Cusco Travel Adventure Perú | | Agencia de viajes en Cusco | Agencia de Viajes en Perú | Tours Machu Picchu | Tours en Cusco",
+    	description: "Cusco Adventure Travel Perú, agencia de viajes especializada en tours a Cusco, Machu Picchu y Perú. Vive experiencias únicas de cultura y aventura.",
+    	longDescription: "Descubre Cusco y Machu Picchu con Cusco Adventure Travel Perú. Somos una agencia de viajes especializada en experiencias únicas de cultura, historia y aventura. Viaja con seguridad, calidad y el mejor servicio en Perú."
+  	},
+  	en: {
+    	title: "Cusco Travel Adventure Peru | | Travel Agency in Cusco | Travel Agency in Peru | Machu Picchu Tours | Tours in Cusco",
+    	description: "Cusco Adventure Travel Peru, a travel agency specialized in tours to Cusco, Machu Picchu, and Peru. Live unforgettable cultural and adventure experiences.",
+    	longDescription: "Discover Cusco and Machu Picchu with Cusco Adventure Travel Peru. We are a travel agency specialized in unique experiences of culture, history, and adventure. Travel safely with quality and the best service in Peru."
+  	}
+}[lang];
+---
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{meta.title}</title>
+		<meta name="description" content={meta.description}>
+
+		<meta property="og:url" content="https://cuscoadventuretravelperu.com/">
+		<meta property="og:type" content="website">
+		<meta property="og:title" content={meta.title}>
+		<meta property="og:description" content={meta.longDescription}>
+		<meta property="og:image" content="">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta property="twitter:domain" content="cuscoadventuretravelperu.com">
+		<meta property="twitter:url" content="https://cuscoadventuretravelperu.com/">
+		<meta name="twitter:title" content={meta.title}>
+		<meta name="twitter:description" content={meta.longDescription}>
+		<meta name="twitter:image" content="">
+		<style>
+			@keyframes bounce-smooth {
+				0%, 100% {
+					transform: translateY(0);
+				}
+				50% {
+					transform: translateY(-8px);
+				}
+			}
+			.animate-bounce-smooth {
+				animation: bounce-smooth 2s infinite ease-in-out;
+			}
+		</style>
 	</head>
 	<body>
+		<Navbar />
 		<slot />
+		<Footer />
+		<a href="https://wa.me/51973291892?text=Hola%20Cusco%20Adventure%20Travel%20Per%C3%BA%2C%20estoy%20interesado%20en%20consultar%20sobre%20tus%20paquetes%20de%20turismo.%20%F0%9F%98%8A" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 bg-green-500 text-white rounded-full shadow-lg p-4 hover:scale-110 transition-transform duration-300 z-50 animate-bounce-smooth">
+			<i class="fab fa-whatsapp fa-lg"></i>
+		</a>
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

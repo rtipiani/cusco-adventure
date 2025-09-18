@@ -1,0 +1,161 @@
+---
+interface Foto {
+  	src: string;
+  	alt: string;
+  	titulo: string;
+  	categoria: string;
+}
+
+export interface Props {
+  	galeria: Foto[];
+  	categorias: string[];
+  	tituloSeccion: string;
+}
+
+const { galeria, categorias, tituloSeccion } = Astro.props;
+---
+<section class="py-8 bg-gray-100">
+  	<div class="max-w-5xl mx-auto px-6 text-center flex flex-wrap justify-center gap-3">
+    	{categorias.map((cat, i) => (
+      		<button type="button" class={`filter-btn px-5 py-2 rounded-full border font-medium transition-all duration-300 ${ i === 0 ? "bg-green-800 text-white border-green-800" : "bg-white text-green-800 border-green-800 hover:bg-green-700 hover:text-white"}`} data-filter={cat}>
+        		{cat}
+      		</button>
+    	))}
+  	</div>
+</section>
+
+<section class="py-16 bg-gray-50">
+  	<div class="max-w-7xl mx-auto px-6">
+    	<h2 class="text-3xl md:text-4xl font-bold text-green-900 text-center mb-12">
+      		{tituloSeccion}
+    	</h2>
+
+    	<div id="galleryGrid" class="grid gap-4 grid-cols-[repeat(auto-fill,minmax(220px,1fr))]">
+      		{galeria.map((foto, index) => (
+        		<div class="gallery-item relative group rounded-lg overflow-hidden shadow hover:shadow-2xl transition cursor-pointer w-full" data-index={index} data-categoria={foto.categoria} data-src={foto.src} data-titulo={foto.titulo}>
+          			<img src={foto.src} srcset={`${foto.src}?w=400 400w, ${foto.src}?w=800 800w, ${foto.src}?w=1200 1200w`} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" alt={foto.alt} class="w-full h-48 object-cover rounded-lg transform group-hover:scale-105 transition duration-500" loading="lazy" />
+          			<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
+            			<span class="text-white text-lg font-semibold drop-shadow">{foto.titulo}</span>
+          			</div>
+        		</div>
+      		))}
+    	</div>
+  	</div>
+</section>
+
+<div id="modal" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-50 p-4">
+  	<button id="modalClose" class="absolute top-6 right-6 text-white text-3xl">
+    	<i class="fa-solid fa-xmark"></i>
+  	</button>
+
+  	<div class="max-w-[90vw] max-h-[80vh] flex flex-col items-center relative">
+    	<button id="prevBtn" class="absolute left-[-3rem] top-1/2 -translate-y-1/2 text-white text-4xl">
+      		<i class="fa-solid fa-chevron-left"></i>
+    	</button>
+    	<img id="modalImage" class="max-h-[70vh] max-w-full rounded-lg shadow-lg mb-4 transform transition duration-500 scale-95 opacity-0" alt="Imagen ampliada" />
+    	<button id="nextBtn" class="absolute right-[-3rem] top-1/2 -translate-y-1/2 text-white text-4xl">
+      		<i class="fa-solid fa-chevron-right"></i>
+    	</button>
+    	<p id="modalCaption" class="text-white text-lg text-center"></p>
+  	</div>
+</div>
+
+<script is:inline>
+  	const modal = document.getElementById("modal");
+  	const modalImage = document.getElementById("modalImage");
+  	const modalCaption = document.getElementById("modalCaption");
+  	const modalClose = document.getElementById("modalClose");
+  	const galleryItems = document.querySelectorAll(".gallery-item");
+  	const filterButtons = document.querySelectorAll(".filter-btn");
+  	const prevBtn = document.getElementById("prevBtn");
+  	const nextBtn = document.getElementById("nextBtn");
+
+  	let currentIndex = 0;
+  	const images = Array.from(galleryItems).map((item) => ({
+    	src: item.dataset.src,
+    	titulo: item.dataset.titulo,
+  	}));
+
+  	function preloadImages() {
+    	images.forEach((img) => {
+      		const preload = new Image();
+      		preload.src = img.src;
+    	});
+  	}
+
+  	function openModal(index) {
+  		currentIndex = index;
+  		updateModal();
+  		modal.classList.remove("hidden");
+  		modal.classList.add("flex");
+  		document.documentElement.style.overflow = "hidden";
+	}
+
+  	function closeModal() {
+    	modal.classList.add("hidden");
+    	modal.classList.remove("flex");
+    	modalImage.classList.remove("opacity-100", "scale-100");
+    	modalImage.classList.add("opacity-0", "scale-95");
+    	document.documentElement.style.overflow = "";
+  	}
+
+  	function updateModal() {
+  		const { src, titulo } = images[currentIndex];
+  		modalImage.src = src;
+  		modalCaption.textContent = titulo;
+
+  		const nextIndex = (currentIndex + 1) % images.length;
+  		const prevIndex = (currentIndex - 1 + images.length) % images.length;
+  		[images[nextIndex], images[prevIndex]].forEach(img => {
+    		const preload = new Image();
+    		preload.src = img.src;
+  		});
+
+  		modalImage.classList.remove("opacity-0", "scale-95");
+  		modalImage.classList.add("opacity-100", "scale-100");
+	}
+
+  	galleryItems.forEach((item, index) => {
+    	item.addEventListener("click", () => openModal(index));
+  	});
+  	modalClose.addEventListener("click", closeModal);
+  	modal.addEventListener("click", (ev) => {
+    	if (ev.target.id === "modal") closeModal();
+  	});
+  	document.addEventListener("keydown", (ev) => {
+    	if (ev.key === "Escape") closeModal();
+    	if (ev.key === "ArrowRight") nextImage();
+    	if (ev.key === "ArrowLeft") prevImage();
+  	});
+  	nextBtn.addEventListener("click", nextImage);
+  	prevBtn.addEventListener("click", prevImage);
+
+  	function nextImage() {
+    	currentIndex = (currentIndex + 1) % images.length;
+    	updateModal();
+  	}
+  	function prevImage() {
+    	currentIndex = (currentIndex - 1 + images.length) % images.length;
+    	updateModal();
+  	}
+
+  	filterButtons.forEach((btn) => {
+    	btn.addEventListener("click", () => {
+      		const filter = btn.dataset.filter;
+      		galleryItems.forEach((item) => {
+        		if (filter === "Todos" || item.dataset.categoria === filter) {
+          			item.classList.remove("hidden");
+        		} else {
+          			item.classList.add("hidden");
+        		}
+      		});
+      		filterButtons.forEach(
+        		(b) =>
+          			(b.className =
+            			"filter-btn px-5 py-2 rounded-full border font-medium transition-all duration-300 bg-white text-green-800 border-green-800 hover:bg-green-700 hover:text-white")
+      		);
+      		btn.className =
+        		"filter-btn px-5 py-2 rounded-full border font-medium transition-all duration-300 bg-green-800 text-white border-green-800";
+    	});
+  	});
+</script>
